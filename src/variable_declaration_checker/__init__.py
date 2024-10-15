@@ -18,7 +18,7 @@ class VariableDeclarationChecker(pylint.checkers.BaseChecker):
     def check_locals(self, locals_dictionary: dict[str, list[astroid.nodes.NodeNG]]):
         for name, occurrences in locals_dictionary.items():
             if name == "_":
-                return
+                break
 
             occurrence_iterator = iter(occurrences)
             occurrence = next(occurrence_iterator)
