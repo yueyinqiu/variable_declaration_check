@@ -1,15 +1,19 @@
-import astroid
 import astroid.nodes
 
+module = astroid.parse(
+"""
+x1 = 1                      # Line 1
+def f1():                   # Line 2
+    x2 = 2                  # Line 3
+    def f2():               # Line 4
+        global x1           # Line 5
+        nonlocal x2         # Line 6
+        x1 = 1              # Line 7
+        x2 = 2              # Line 8
+""")
 
-p = astroid.parse(
-    """
-    def c1():
-        print(x := 1)
-    def c2():
-        x = 2
-    x = 3
-    """)
-l: astroid.nodes.AnnAssign = p.body[0].locals
-l.optional_assign
-pass
+f2 = module.locals["f1"][0].locals["f2"][0]
+print(f2.locals)
+
+# Output:
+# {'x2': [<AssignName.x2 l.9 at 0x1ddffab04d0>]}
