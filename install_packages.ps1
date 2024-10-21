@@ -8,3 +8,4 @@ Write-Host "Enter Anything To Confirm: " -NoNewline
 
 pip install --upgrade setuptools build twine
 pip install --upgrade pylint
+pip install --upgrade pytest
